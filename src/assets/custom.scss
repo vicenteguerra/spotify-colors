@@ -1,0 +1,20 @@
+@import '~bulma/bulma.sass';
+
+$primary: orange;
+
+body{
+    background: rgb(5,30,75);
+    background: -moz-linear-gradient(0deg, rgba(42,8,84,1) 0%,  rgba(5,30,75,1) 100%);
+    background: -webkit-linear-gradient(0deg, rgba(42,8,84,1) 0%, rgba(5,30,75,1) 100%);
+    background: linear-gradient(0deg, rgba(42,8,84,1)  0%, rgba(5,30,75,1) 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#2a0854",endColorstr="#051e4b",GradientType=1);
+}
+
+.card{
+    border-radius: 15px;
+}
+.rectangle {
+    width: 100%;   
+    margin-bottom: 0px;    
+    border-radius: 15px 15px 0 0;         
+}

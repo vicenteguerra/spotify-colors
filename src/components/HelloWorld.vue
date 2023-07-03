@@ -1,10 +1,10 @@
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <button class="bg-spotify-green px-8 py-4 h-min rounded-lg flex flex-row items-center font-bold" @click="login()">
-        <span class="pl-2 text-[25px]">Login with Spotify</span>
-    </button>    
-  </div>
+   <section class="section">
+    <div class="container">
+      <h1 class="title">Spotify Colours</h1>
+      <button class="button is-primary" @click="login()">Login with Spotify</button>
+    </div>
+  </section>  
 </template>
 
 <script>

@@ -1,39 +1,40 @@
 <template>
-    <div class="playlist">    
-        <h2>{{ this.playlist.name }} </h2>
-        <div id="playlists-container">
-            <div v-for="item in items" :key="item.track.id" class="playlist-card"> 
-                <div :style="{ backgroundColor: item.colour }" class="rectangle"></div>               
-                <img v-if="item.track.album.images[0]" :src="item.track.album.images[0].url" alt="Album cover" width="100" height="100">
-                <p @click="showSong(item.track.id)" class="trackTitle">{{ item.track.name }}</p>                                
+    <div class="playlist container"> 
+        <section class="hero">
+            <div class="hero-body">
+                <p class="title has-text-white">{{ this.playlist.name }}</p>
+            </div>
+        </section>     
+        <div class="columns is-multiline">
+            <div v-for="item in items" :key="item.track.id" class="is-2 column"> 
+                <div class="card has-background-dark"  @click="showSong(item.track.id)">
+                    <div :style="{ backgroundColor: item.colour, color: getContrastingColor(item.colour)}" class="rectangle">
+                        <p>{{ item.colour }}</p>
+                    </div>
+                    <div class="card-image">
+                        <figure class="image">
+                            <img v-if="item.track.album.images[0]" :src="item.track.album.images[0].url" alt="Album cover">
+                        </figure>   
+                    </div>
+                    <div class="card-content">
+                        <div class="content paragraph-wrapper">
+                            <p class="paragraph has-text-white">{{ item.track.name }}</p>  
+                        </div>                        
+                    </div>
+                </div>                                                                      
             </div>
         </div>
     </div>
   </template>
 
-  <style>
-    #playlists-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
-
-    .playlist-card {
-        flex: 1 0 100px; /* Este valor determina el tamaño mínimo de las tarjetas. Ajusta como necesites. */
-        margin: 5px;   /* Este valor determina el espacio entre las tarjetas. Ajusta como necesites. */
-        /* Aquí puedes agregar más estilos para tus tarjetas, como el borde, el sombreado, etc. */
-    }
-    .rectangle {
-        width: 100%;
-        height: 20px;
-        margin-bottom: 10px;
-    }
-    .trackTitle {
-        display: -webkit-box;
-        -webkit-line-clamp: 2;
-        -webkit-box-orient: vertical;
+  <style>       
+    .paragraph-wrapper {
+        height: 2em; /* Ajusta la altura deseada para dos líneas */
         overflow: hidden;
-    }
+    } 
+    .paragraph {
+        line-height: 1em; /* Ajusta la altura deseada para una línea */
+    }    
   </style>
   
   <script>  
@@ -52,6 +53,17 @@
         }
     },
     methods: {
+        getContrastingColor(hexColor){
+            console.log("GET CONTRASTING", hexColor)
+            if(!hexColor) return "black"
+            var r = parseInt(hexColor.substr(1, 2), 16); // Obtiene el valor de rojo
+            var g = parseInt(hexColor.substr(3, 2), 16); // Obtiene el valor de verde
+            var b = parseInt(hexColor.substr(5, 2), 16); // Obtiene el valor de azul
+
+            var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000; // Calcula la luminancia
+
+            return (yiq >= 128) ? 'black' : 'white'; // Devuelve 'black' si la luminancia es alta, 'white' si es baja   
+        },  
         showSong(id){
             this.$router.push({ name: 'Song', params: { songId: id } });
         },

@@ -23,7 +23,7 @@
     .rectangle {
         width: 100%;
         height: 20px;
-        margin-bottom: 10px;
+        margin-bottom: 0px;
     }
     .trackTitle {
         display: -webkit-box;

@@ -1,36 +1,55 @@
 <template>
-    <div class="colours">    
-        <h1>Colours 🎶</h1>
-        <h2>Hola {{ this.username }}</h2>
-        <div id="playlists-container">
-            <div v-for="playlist in playlists" :key="playlist.id" class="playlist-card">
-                <div :style="{ backgroundColor: playlist.colour }" class="rectangle"></div>
-                <img v-if="playlist.images[0]" :src="playlist.images[0].url" alt="Playlist cover" width="100" height="100">
-                <p @click="showPlaylist(playlist.id)">{{ playlist.name }}</p>                
-                <p>Color {{ playlist.colour }}</p>
+    <div class="colours container">   
+        <section class="hero">
+            <div class="hero-body">
+                <p class="title has-text-white">Your Playlists 🎶</p>
+                <p class="subtitle has-text-white">Hola {{ this.user.display_name }}</p>
+            </div>
+        </section>         
+        <div class="columns is-multiline">
+            <div v-for="playlist in playlists" :key="playlist.id" class="is-2 column">
+                <div class="card has-background-dark"  @click="showPlaylist(playlist.id)">
+                    <div :style="{ backgroundColor: playlist.colour, color: getContrastingColor(playlist.colour)}" class="rectangle">
+                        <p>{{ playlist.colour }}</p>
+                    </div>
+                    <div class="card-image">
+                        <figure class="image">
+                            <img v-if="playlist.images[0]" :src="playlist.images[0].url" alt="Playlist cover">
+                        </figure>   
+                    </div>
+                    <div class="card-content">
+                        <div class="content paragraph-wrapper">
+                            <p class="paragraph  has-text-white">{{ playlist.name }} </p>  
+                        </div>                        
+                    </div>
+                </div>                
             </div>
         </div>
-
-
     </div>
   </template>
 
-  <style>
-    #playlists-container {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-    }
-
-    .playlist-card {
-        flex: 1 0 200px; /* Este valor determina el tamaño mínimo de las tarjetas. Ajusta como necesites. */
-        margin: 10px;   /* Este valor determina el espacio entre las tarjetas. Ajusta como necesites. */
-        /* Aquí puedes agregar más estilos para tus tarjetas, como el borde, el sombreado, etc. */
+  <style>   
+    .paragraph-wrapper {
+        height: 2em; /* Ajusta la altura deseada para dos líneas */
+        overflow: hidden;
+    } 
+    .paragraph {
+        line-height: 1em; /* Ajusta la altura deseada para una línea */
     }
     .rectangle {
-        width: 100%;
-        height: 20px;
-        margin-bottom: 10px;
+        width: 100%;                
+    }
+    .max-1-lines {
+        display: -webkit-box;
+        -webkit-line-clamp: 1;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    .max-2-lines {
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
   </style>
   
@@ -44,10 +63,24 @@
     data: function () {
         return {
             username: null,
-            playlists: []
+            playlists: [],
+            user: {
+
+            }
         }
     },
     methods: {
+        getContrastingColor(hexColor){
+            console.log("GET CONTRASTING", hexColor)
+            if(!hexColor) return "black"
+            var r = parseInt(hexColor.substr(1, 2), 16); // Obtiene el valor de rojo
+            var g = parseInt(hexColor.substr(3, 2), 16); // Obtiene el valor de verde
+            var b = parseInt(hexColor.substr(5, 2), 16); // Obtiene el valor de azul
+
+            var yiq = ((r * 299) + (g * 587) + (b * 114)) / 1000; // Calcula la luminancia
+
+            return (yiq >= 128) ? 'black' : 'white'; // Devuelve 'black' si la luminancia es alta, 'white' si es baja   
+        },        
         showPlaylist(id){
             this.$router.push({ name: 'Playlist', params: { playlistId: id } });
         },
@@ -66,6 +99,7 @@
                 }
             }).then((response) => {
                 console.log("ME DATA", response.data)
+                this.user = response.data
                 this.username = response.data.id
             })
         },
