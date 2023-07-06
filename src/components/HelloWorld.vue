@@ -1,10 +1,15 @@
 <template>
-   <section class="section">
-    <div class="container">
-      <h1 class="title">Spotify Colours</h1>
+  <section class="hero is-fullheight is-info columns is-flex is-vcentered is-centered">
+    <div class="">
+      <p class="title">
+        Spotify Colours
+      </p><br>
+      <p class="subtitle">
+        Shows the main colour of your favorite album covers
+      </p>
       <button class="button is-primary" @click="login()">Login with Spotify</button>
     </div>
-  </section>  
+  </section>
 </template>
 
 <script>
@@ -36,17 +41,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
 a {
   color: #42b983;
 }
