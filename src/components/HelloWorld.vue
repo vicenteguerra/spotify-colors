@@ -1,5 +1,5 @@
 <template>
-  <section class="hero is-fullheight is-info columns is-flex is-vcentered is-centered">
+  <section class="has-background-dark hero is-fullheight is-info columns is-flex is-vcentered is-centered">
     <div class="">
       <p class="title">
         Spotify Colours
